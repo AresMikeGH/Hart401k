@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>401(k) Allocation Guide — Ares Financial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B2B4B; --sky:#4CB8E8; --green:#6ABB4B; --white:#fff;
+  --fog:#F4F6FA; --muted:#8A96AA; --text:#2C3A52; --sell:#c0392b; --buy:#27963a;
+  --line:#dde1ea;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:#eef1f6; color:var(--text);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-weight:400; line-height:1.5;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 60px}
+h1,h2,h3{margin:0}
+.serif{font-family:'Playfair Display',Georgia,serif}
+
+/* ---------- header ---------- */
+header{background:var(--white);border-bottom:2px solid var(--navy);margin-bottom:26px}
+.hdr{max-width:1080px;margin:0 auto;padding:20px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:15px;color:var(--navy);letter-spacing:.5px}
+.logo span{color:var(--green);font-weight:400}
+.tag{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.doctitle{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:var(--navy);line-height:1.15;text-align:right}
+.doctitle em{color:var(--sky);font-style:italic;font-weight:400}
+
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--sky);margin-bottom:10px}
+.card{background:var(--white);border-radius:6px;padding:24px;box-shadow:0 1px 3px rgba(27,43,75,.07);margin-bottom:22px}
+.lede{font-size:15px;font-weight:300;max-width:70ch;margin:0 0 4px}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:4px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted);
+  padding:11px 18px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--navy)}
+.tab[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--sky)}
+.panel[hidden]{display:none}
+
+/* ---------- balance input ---------- */
+.balrow{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
+.field label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.inputwrap{position:relative;display:inline-block}
+.inputwrap .dollar{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;font-weight:500}
+input[type=text]{font-family:inherit;font-size:17px;font-weight:600;color:var(--navy);padding:11px 14px 11px 28px;
+  border:1px solid var(--line);border-radius:4px;width:210px;background:var(--fog)}
+input[type=text]:focus{outline:none;border-color:var(--sky);background:#fff}
+.hint{font-size:11px;color:var(--muted);max-width:38ch;line-height:1.45}
+
+/* ---------- option cards ---------- */
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.opt{background:var(--white);border:2px solid var(--line);border-radius:6px;padding:0;cursor:pointer;
+  text-align:left;font-family:inherit;transition:border-color .15s, box-shadow .15s;overflow:hidden;display:block;width:100%}
+.opt:hover{border-color:var(--sky)}
+.opt[aria-pressed="true"]{border-color:var(--navy);box-shadow:0 3px 12px rgba(27,43,75,.15)}
+.opt-top{padding:16px 18px 14px;border-bottom:1px solid var(--line)}
+.opt-name{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sky);margin-bottom:7px}
+.opt-mix{font-size:31px;font-weight:700;color:var(--navy);line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.opt-sub{font-size:11px;color:var(--muted);margin-top:5px}
+.opt-body{padding:13px 18px 16px;background:var(--fog);font-size:12px;line-height:1.5}
+.opt[aria-pressed="true"] .opt-body{background:#eaf6fd}
+.bar{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-bottom:11px}
+.bar i{display:block}
+.bar .g{background:var(--sky)}
+.bar .p{background:var(--navy)}
+.chk{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:11px}
+.opt[aria-pressed="true"] .chk{color:var(--green)}
+
+/* ---------- stat strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.statgroup{border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.statgroup h3{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 16px;color:#fff}
+.statgroup.up h3{background:var(--navy)}
+.statgroup.down h3{background:#3a4a68}
+.stat{padding:14px 16px;border-bottom:1px solid var(--line);background:#fff}
+.stat:last-child{border-bottom:none}
+.stat .lbl{font-size:11.5px;font-weight:600;color:var(--navy);margin-bottom:3px}
+.stat .num{font-size:27px;font-weight:700;color:var(--navy);line-height:1.15;
+  letter-spacing:-.7px;font-variant-numeric:tabular-nums}
+.stat .num .yr{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
+.stat .num.neg{color:var(--sell)}
+.stat .num.pos{color:var(--buy)}
+.stat .exp{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:4px}
+.stat .dol{font-size:12px;font-weight:600;color:var(--text);margin-top:3px}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--navy);color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  padding:9px 10px;text-align:left}
+th.r,td.r{text-align:right}
+td{padding:9px 10px;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(even) td{background:var(--fog)}
+tr.sec td{background:var(--navy)!important;color:#fff;font-weight:600;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 10px}
+tr.tot td{font-weight:700;color:var(--navy);border-top:2px solid var(--navy);background:#fff!important}
+td.tick{font-weight:600;color:var(--sky)}
+.nowrap{white-space:nowrap}
+td.r, th.r, td.tick{font-variant-numeric:tabular-nums}
+.num-cell{font-weight:600;color:var(--navy)}
+.badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:#fff;background:var(--green);padding:2px 7px;border-radius:3px;vertical-align:2px;margin-left:6px}
+
+/* ---------- chart ---------- */
+.chartbox{position:relative}
+svg.chart{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;margin-top:12px}
+.legend i{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+
+/* ---------- misc ---------- */
+.note{background:var(--fog);border-left:3px solid var(--sky);padding:13px 16px;font-size:11.5px;line-height:1.6;border-radius:0 4px 4px 0}
+.note b{color:var(--navy)}
+.btn{font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.5px;background:var(--navy);color:#fff;
+  border:none;border-radius:4px;padding:12px 22px;cursor:pointer}
+.btn:hover{background:#243a63}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.btn.ghost:hover{background:var(--fog)}
+footer{max-width:1080px;margin:0 auto;padding:18px 20px 40px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.disc{font-size:9.5px;color:#b0b8c8;line-height:1.6;max-width:76%}
+.printonly{display:none}
+h2.sec{font-family:'Playfair Display',Georgia,serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.sub{font-size:12.5px;color:var(--muted);margin-bottom:16px;max-width:72ch}
+
+@media (max-width:860px){
+  .opts{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .doctitle{font-size:19px;text-align:left}
+}
+
+/* ---------- print / PDF ---------- */
+@media print{
+  @page{size:letter portrait;margin:.45in .5in}
+  body{background:#fff;font-size:10px}
+  .noprint{display:none!important}
+  .printonly{display:block}
+  .wrap{max-width:none;padding:0}
+  header{margin-bottom:14px;border-bottom:2px solid var(--navy)}
+  .hdr{padding:0 0 8px}
+  .card{box-shadow:none;border:1px solid var(--line);padding:14px;margin-bottom:12px;break-inside:avoid}
+  .panel[hidden]{display:block!important}
+  .opt{break-inside:avoid}
+  .opt:not([aria-pressed="true"]){display:none}
+  .opts{grid-template-columns:1fr;max-width:340px}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
+  .stat{padding:8px 11px}
+  .stat .num{font-size:16px}
+  .stat .exp{font-size:9px}
+  .statgroup{break-inside:avoid}
+  table{font-size:9px}
+  th,td{padding:5px 7px}
+  .pagebreak{break-before:page}
+  h2.sec{font-size:14px}
+  .chartbox{break-inside:avoid}
+  a[href]:after{content:""}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div>
+      <div class="logo">ARES <span>Financial</span></div>
+      <div class="tag">Wealth Management · Investment Advisory</div>
+    </div>
+    <div class="doctitle">401(k) Allocation <em>Guide</em></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="tabs noprint" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p1" id="t1">Choose Your Mix</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2">Your Fund Menu</button>
+  </div>
+
+  <!-- ============ PANEL 1 ============ -->
+  <section class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+
+    <div class="card">
+      <div class="eyebrow">Step 1 — Your account</div>
+      <h2 class="sec">Start with your balance</h2>
+      <p class="sub">Everything below is shown in dollars so the trade-offs are concrete. Nothing you type is saved or sent anywhere &mdash; it stays in your browser.</p>
+      <div class="balrow">
+        <div class="field">
+          <label for="bal">401(k) balance</label>
+          <div class="inputwrap">
+            <span class="dollar">$</span>
+            <input type="text" id="bal" value="100,000" inputmode="numeric" autocomplete="off">
+          </div>
+        </div>
+        <p class="hint">A round number is fine. This is only used to translate percentages into dollars.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Step 2 — Pick a mix</div>
+      <h2 class="sec">Three options</h2>
+      <p class="sub">The first number is the share in <b>growth</b> investments (stock funds). The second is the share in <b>protective</b> investments (bond and money market funds). More growth has produced more money over long stretches, and bigger drops along the way.</p>
+      <div class="opts" id="opts"></div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Step 3 — The trade-off</div>
+      <h2 class="sec" id="statTitle">What history shows</h2>
+      <p class="sub">Based on how this kind of mix behaved from January 1987 through June 2026 &mdash; 39 full calendar years including the 2000&ndash;02 bear market, the 2008 financial crisis, 2020, and 2022.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="card chartbox">
+      <div class="eyebrow">The long view</div>
+      <h2 class="sec">Growth of $10,000 since 1987</h2>
+      <p class="sub">Your mix is drawn in navy. The other two are shown in grey for comparison. Notice they all move together &mdash; the difference is how far each one falls in a bad stretch, and where each one ends up.</p>
+      <div id="chart"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Step 4 — How it gets invested</div>
+      <h2 class="sec" id="allocTitle">Your allocation</h2>
+      <p class="sub">These are the percentages to enter on your 401(k) election form, and what each slice comes to at your current balance.</p>
+      <div id="alloc"></div>
+    </div>
+
+    <div class="card">
+      <div class="note">
+        <b>About the history above.</b> The long-term figures are calculated from broad market indexes matching each mix &mdash; total US stock market, global stocks outside the US, and the total US bond market &mdash; rebalanced once a year, with dividends reinvested. They are not the track records of the specific funds in your plan, several of which have shorter histories. Index history is used because it covers a much longer period and more market conditions. <b>Past performance is not a guarantee of future results, and no allocation prevents loss.</b>
+      </div>
+    </div>
+
+    <div class="card noprint">
+      <div class="eyebrow">Save a copy</div>
+      <h2 class="sec">Export to PDF</h2>
+      <p class="sub">This opens your browser's print dialog. Choose <b>Save as PDF</b> as the destination to keep a copy of the mix you selected.</p>
+      <button class="btn" id="pdf">Export to PDF</button>
+      <button class="btn ghost" id="viewfunds" style="margin-left:8px">See the fund menu</button>
+    </div>
+
+  </section>
+
+  <!-- ============ PANEL 2 ============ -->
+  <section class="panel pagebreak" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+    <div class="card">
+      <div class="eyebrow">Reference</div>
+      <h2 class="sec">The funds in your plan</h2>
+      <p class="sub">All 22 investment options available in the plan, grouped by what they hold, with a plain-English description of each and what it costs per year.</p>
+      <div id="funds"></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Plain english</div>
+      <h2 class="sec">A few terms</h2>
+      <div id="glossary"></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="disc">
+    All investments involve risk, including loss of principal. This information is believed to be from reliable sources, but no liability is accepted for any inaccuracies. Past performance is no guarantee of future performance. Historical figures are index-based illustrations, not the performance of any specific fund or account, and do not reflect fund expenses, plan fees, or advisory fees, which would reduce returns. This material is for educational purposes and is not a recommendation to buy or sell any security. Ares Financial Consulting, LLC is an investment adviser registered with the U.S. Securities and Exchange Commission.
+  </div>
+  <div style="font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.5px" class="nowrap">
+    ARES <span style="color:var(--green)">Financial</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA
+   ------------------------------------------------------------
+   annual: [year, inflation, 80/20 return, 60/40 return, 40/60 return]
+   Source: Portfolio Visualizer asset-class backtest, Jan 1987 - Jun 2026.
+   Underlying index mixes (US stock / global ex-US stock / US bond):
+     80/20 = 56 / 24 / 20      60/40 = 42 / 18 / 40      40/60 = 28 / 12 / 60
+   Rebalanced annually, dividends reinvested. 2026 is through June (partial).
+   ============================================================ */
+const ANNUAL = [
+[1987,0.0443430,0.0908715,0.0719926,0.0531136],
+[1988,0.0441940,0.1732737,0.1483375,0.1234014],
+[1989,0.0464729,0.2156078,0.1958156,0.1760234],
+[1990,0.0610626,-0.0762219,-0.0355404,0.0051410],
+[1991,0.0306438,0.2346411,0.2140963,0.1935514],
+[1992,0.0290082,0.0297874,0.0401950,0.0506026],
+[1993,0.0274840,0.1506801,0.1372154,0.1237506],
+[1994,0.0267487,0.0171665,0.0062339,-0.0046986],
+[1995,0.0253840,0.2463196,0.2301933,0.2140671],
+[1996,0.0332254,0.1357811,0.1107910,0.0858008],
+[1997,0.0170249,0.1905962,0.1665560,0.1425158],
+[1998,0.0161188,0.1848900,0.1601214,0.1353529],
+[1999,0.0268478,0.2036400,0.1508320,0.0980240],
+[2000,0.0338686,-0.0739082,-0.0269524,0.0200034],
+[2001,0.0155172,-0.0929216,-0.0486230,-0.0043245],
+[2002,0.0237689,-0.1370622,-0.0821512,-0.0272401],
+[2003,0.0187940,0.2803438,0.2201911,0.1600384],
+[2004,0.0325572,0.1285713,0.1070214,0.0854714],
+[2005,0.0341555,0.0756522,0.0627285,0.0498047],
+[2006,0.0254077,0.1593287,0.1301683,0.1010079],
+[2007,0.0408137,0.0818380,0.0786817,0.0755254],
+[2008,0.0009148,-0.3031482,-0.2147296,-0.1263111],
+[2009,0.0272128,0.2607227,0.2103787,0.1600346],
+[2010,0.0149567,0.1352560,0.1174928,0.0997297],
+[2011,0.0296215,-0.0144543,0.0080515,0.0305573],
+[2012,0.0174108,0.1426519,0.1171072,0.0915625],
+[2013,0.0150176,0.2183412,0.1580998,0.0978583],
+[2014,0.0075662,0.0709486,0.0676051,0.0642616],
+[2015,0.0072948,-0.0082722,-0.0054599,-0.0026477],
+[2016,0.0207462,0.0863535,0.0710159,0.0556783],
+[2017,0.0210908,0.1905428,0.1515376,0.1125324],
+[2018,0.0191016,-0.0643517,-0.0485818,-0.0328118],
+[2019,0.0228513,0.2402817,0.2017266,0.1631715],
+[2020,0.0136201,0.1588878,0.1381966,0.1175054],
+[2021,0.0703640,0.1604369,0.1159151,0.0713933],
+[2022,0.0645440,-0.1748039,-0.1642246,-0.1536454],
+[2023,0.0335212,0.1931445,0.1588516,0.1245587],
+[2024,0.0288806,0.1466815,0.1128558,0.0790301],
+[2025,0.0266930,0.1862129,0.1572465,0.1282800],
+[2026,0.0195564,0.0966846,0.0742520,0.0518193]  /* through June */
+];
+
+/* Worst-drop facts, measured month by month (Oct 2007 peak -> Feb 2009 trough
+   for all three), plus how long each took to get back to its old high. */
+const DRAWDOWN = {
+  '80/20':{dd:-0.4331, peak:'Oct 2007', trough:'Feb 2009', recMonths:42, recAt:'Apr 2011'},
+  '60/40':{dd:-0.3245, peak:'Oct 2007', trough:'Feb 2009', recMonths:36, recAt:'Oct 2010'},
+  '40/60':{dd:-0.2063, peak:'Oct 2007', trough:'Feb 2009', recMonths:25, recAt:'Nov 2009'}
+};
+
+const OPTIONS = [
+  {id:'80/20', col:2, growth:.80, name:'Growth Focused',
+   blurb:'Most of the account works for long-term growth. Expect the biggest swings, including stretches where the balance falls sharply and stays down for a couple of years.'},
+  {id:'60/40', col:3, growth:.60, name:'Balanced',
+   blurb:'A middle course. Meaningful long-term growth with noticeably smaller drops than the growth-focused mix. The traditional default for many retirement accounts.'},
+  {id:'40/60', col:4, growth:.40, name:'Conservative',
+   blurb:'Steadier year to year and the mildest declines of the three. The trade-off is a smaller balance over long periods, and less cushion against rising prices.'}
+];
+
+/* ---- The plan's full fund menu. ----
+   Funds with a `sleeve` are used in the three models; `cat` is that fund's
+   share WITHIN its sleeve, so portfolio % = cat x sleeve target.
+   Funds without a `sleeve` are available in the plan but not used in the models.
+   TO UPDATE: edit this array only. Order here = display order within each group. */
+const FUNDS = [
+  /* ---------- used in the models ---------- */
+  {sleeve:'growth', cat:.50, name:'iShares S&P 500 Index A', ticker:'BSPAX', er:.0035,
+   assetClass:'US Equity', mstar:'Large Blend (S&P 500 Index)',
+   desc:'Owns the 500 largest US companies, weighted by size. The core US stock holding, and the cheapest option in the plan.'},
+  {sleeve:'growth', cat:.20, name:'American Funds Capital Income Builder R4', ticker:'RIREX', er:.0062,
+   assetClass:'Allocation', mstar:'Global Allocation',
+   desc:'A blend of dividend-paying stocks and bonds worldwide, managed for income alongside growth.'},
+  {sleeve:'growth', cat:.15, name:'American Funds New Perspective R4', ticker:'RNPEX', er:.0076,
+   assetClass:'Global Equity', mstar:'Global Large-Stock Growth',
+   desc:'Large growing companies anywhere in the world, including the US.'},
+  {sleeve:'growth', cat:.15, name:'American Funds EuroPacific Growth R4', ticker:'REREX', er:.0082,
+   assetClass:'International Equity', mstar:'Foreign Large Growth',
+   desc:'Growing companies in Europe and Asia. Adds exposure outside the US economy and the dollar.'},
+  {sleeve:'protective', cat:.40, name:'Fidelity Advisor Total Bond A', ticker:'FEPAX', er:.0075,
+   assetClass:'Fixed Income', mstar:'Intermediate Core-Plus Bond',
+   desc:'A broad mix of US bonds — government, corporate and mortgage. Pays interest and cushions stock declines.'},
+  {sleeve:'protective', cat:.40, name:'American Funds US Government Securities R4', ticker:'RGVEX', er:.0059,
+   assetClass:'Fixed Income', mstar:'Intermediate Government',
+   desc:'US Treasury and agency bonds only. The most defensive bond option in the plan.'},
+  {sleeve:'protective', cat:.20, name:'American Funds US Government Money Market R4', ticker:'RADXX', er:.0065,
+   assetClass:'Cash / Money Market', mstar:'Money Market — Taxable',
+   desc:'Short-term government IOUs. Essentially stable in value; the closest thing to cash.'},
+
+  /* ---------- also available in the plan ---------- */
+  {name:'American Funds Investment Company of America R4', ticker:'RICEX', er:.0061,
+   assetClass:'US Equity', mstar:'Large Blend',
+   desc:'Large, established US companies — a mix of steady and growing businesses.'},
+  {name:'Hartford Core Equity R4', ticker:'HGISX', er:.0072,
+   assetClass:'US Equity', mstar:'Large Blend',
+   desc:'A focused set of large US companies chosen by the manager rather than tracking an index.'},
+  {name:'Impax US Sustainable Economy A', ticker:'PXGAX', er:.0070,
+   assetClass:'US Equity', mstar:'Large Blend',
+   desc:'Large US companies screened on environmental and social criteria.'},
+  {name:'American Funds Washington Mutual R4', ticker:'RWMEX', er:.0061,
+   assetClass:'US Equity', mstar:'Large Value',
+   desc:'Established, dividend-paying US companies bought at conservative prices. Typically steadier than a growth fund.'},
+  {name:'American Funds Growth Fund of America R4', ticker:'RGAEX', er:.0063,
+   assetClass:'US Equity', mstar:'Large Growth',
+   desc:'Large US companies expected to grow faster than average. More upside and more volatility than a blend fund.'},
+  {name:'American Funds AMCAP R4', ticker:'RAFEX', er:.0068,
+   assetClass:'US Equity', mstar:'Large Growth',
+   desc:'US growth companies with a record of consistent earnings.'},
+  {name:'T. Rowe Price Blue Chip Growth Adv', ticker:'PABGX', er:.0095,
+   assetClass:'US Equity', mstar:'Large Growth',
+   desc:'Well-known large US growth companies, concentrated in fewer names than an index fund.'},
+  {name:'iShares Russell 2000 Small-Cap Index A', ticker:'MDSKX', er:.0037,
+   assetClass:'US Equity', mstar:'Small Blend (Index)',
+   desc:'Tracks about 2,000 smaller US companies. Higher growth potential and noticeably bigger swings than large-company funds.'},
+  {name:'Victory Sycamore Small Company Opportunity A', ticker:'SSGSX', er:.0126,
+   assetClass:'US Equity', mstar:'US Small-Cap Value',
+   desc:'Smaller US companies trading at modest prices. The most expensive option in the plan.'},
+  {name:'Franklin Small Cap Growth A', ticker:'FSGRX', er:.0104,
+   assetClass:'US Equity', mstar:'Small Growth',
+   desc:'Fast-growing smaller US companies. Among the most volatile options in the plan.'},
+  {name:'American Funds Capital World Growth & Income R4', ticker:'RWIEX', er:.0076,
+   assetClass:'Global Equity', mstar:'Global Large-Stock Blend',
+   desc:'Large companies worldwide, including the US, with an eye on dividends as well as growth.'},
+  {name:'American Funds SMALLCAP World R4', ticker:'RSLEX', er:.0100,
+   assetClass:'Global Equity', mstar:'Global Small/Mid Stock',
+   desc:'Smaller and mid-sized companies around the world. Wide swings; a specialty holding rather than a core one.'},
+  {name:'iShares MSCI EAFE International Index A', ticker:'MDIIX', er:.0034,
+   assetClass:'International Equity', mstar:'Foreign Large Blend',
+   desc:'Tracks large companies in developed markets outside the US — Europe, Japan, Australia. A low-cost way to own international stocks.'},
+  {name:'Impax International Sustainable Economy Invst', ticker:'PXINX', er:.0070,
+   assetClass:'International Equity', mstar:'Foreign Large Blend',
+   desc:'Large companies outside the US, screened on environmental and social criteria.'},
+  {name:'American Funds American Balanced R4', ticker:'RLBEX', er:.0059,
+   assetClass:'Allocation', mstar:'Moderate Allocation (50–70% Equity)',
+   desc:'A single fund holding roughly 60% stocks and 40% bonds, rebalanced for you. An all-in-one alternative to building a mix yourself.'}
+];
+
+/* Display order for the fund menu tab */
+const CLASS_ORDER = ['US Equity','Global Equity','International Equity','Allocation','Fixed Income','Cash / Money Market'];
+
+const GLOSSARY = [
+  ['Growth vs. protective','Growth investments (stock funds) own pieces of companies. Their value rises and falls with those businesses and with investor mood. Protective investments (bond and money market funds) lend money out and collect interest. They earn less over long periods but hold up far better when stocks fall.'],
+  ['Rebalancing','Markets pull your mix off target — a good stock year leaves you with more in stocks than you chose. Rebalancing sells a bit of what grew and buys what lagged, putting you back to your target. The history here assumes this happens once a year.'],
+  ['Decline / drawdown','How far the balance fell from its highest point before recovering. This is the number that tests whether you can stay put, because it is what shows up on the statement.'],
+  ['Average annual return','The steady yearly rate that gets you from the starting balance to the ending one. No single year looks like the average — the average is the smooth path through a bumpy one.'],
+  ['Inflation-adjusted','The same return restated in what it could actually buy. Prices roughly tripled from 1987 to 2026, so a dollar then bought about three times what it does now. A 7% return in a 3% inflation world is really about 4%.'],
+  ['Expense ratio','The percentage a fund charges each year to run itself. You never write a check for it — it comes out of the fund before returns are reported. On this menu the options range from 0.34% to 1.26% a year.']
+];
+
+/* ============================================================
+   MATH
+   ============================================================ */
+const FULL = ANNUAL.filter(r=>r[0]<=2025);        // complete calendar years
+const money = n => '$'+Math.round(n).toLocaleString('en-US');
+const pct = (n,d=1) => (n*100).toFixed(d)+'%';
+const spct = (n,d=1) => (n>=0?'+':'')+(n*100).toFixed(d)+'%';
+
+function compute(col){
+  const rets = FULL.map(r=>r[col]);
+  let prodFull=1;                                  // incl. 2026 partial
+  ANNUAL.forEach(r=>prodFull*=(1+r[col]));
+  let prodInfl=1;
+  ANNUAL.forEach(r=>prodInfl*=(1+r[1]));
+  const yrs = ANNUAL.length-1+6/12;                // Jan 1987 - Jun 2026
+  const cagr = Math.pow(prodFull,1/yrs)-1;
+  const realCagr = Math.pow(prodFull/prodInfl,1/yrs)-1;
+  const best = Math.max(...rets), worst = Math.min(...rets);
+  return {
+    cagr, realCagr,
+    end10k: 10000*prodFull,
+    real10k: 10000*prodFull/prodInfl,
+    best, bestYear: FULL[rets.indexOf(best)][0],
+    worst, worstYear: FULL[rets.indexOf(worst)][0],
+    down: rets.filter(r=>r<0).length,
+    total: rets.length
+  };
+}
+const STATS = {};
+OPTIONS.forEach(o=>STATS[o.id]=compute(o.col));
+
+/* running balance of $10,000, per option, for the chart */
+function balances(col){
+  let v=10000; const out=[{year:1986,v}];
+  ANNUAL.forEach(r=>{v*=(1+r[col]); out.push({year:r[0],v});});
+  return out;
+}
+const CURVES = {}; OPTIONS.forEach(o=>CURVES[o.id]=balances(o.col));
+
+/* ============================================================
+   STATE + RENDER
+   ============================================================ */
+let sel = '60/40';
+let bal = 100000;
+
+function parseBal(s){
+  const n = parseFloat(String(s).replace(/[^0-9.]/g,''));
+  return (isFinite(n) && n>0) ? n : 0;
+}
+
+/* ---- option cards ---- */
+function renderOpts(){
+  document.getElementById('opts').innerHTML = OPTIONS.map(o=>{
+    const s = STATS[o.id], g = Math.round(o.growth*100);
+    return `<button class="opt" data-id="${o.id}" aria-pressed="${o.id===sel}">
+      <div class="opt-top">
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-mix">${o.id}</div>
+        <div class="opt-sub">${g}% growth &middot; ${100-g}% protective</div>
+      </div>
+      <div class="opt-body">
+        <div class="bar"><i class="g" style="width:${g}%"></i><i class="p" style="width:${100-g}%"></i></div>
+        ${o.blurb}
+        <div class="chk">${o.id===sel?'&#10003; Selected':'Select'}</div>
+      </div>
+    </button>`;
+  }).join('');
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{sel=b.dataset.id;renderAll();});
+}
+
+/* ---- stat cards ---- */
+function renderStats(){
+  const s = STATS[sel], d = DRAWDOWN[sel], o = OPTIONS.find(x=>x.id===sel);
+  const yrsTxt = '39½ years';
+  const growLbl = `Growth side <span style="opacity:.55">— what you're playing for</span>`;
+  const riskLbl = `Risk side <span style="opacity:.55">— what you'd have to sit through</span>`;
+
+  const yr = y => ` <span class="yr">${y}</span>`;
+  const up = [
+    ['Average annual return', pct(s.cagr,1), 'pos',
+     `The steady yearly rate this mix averaged over ${yrsTxt}. No single year looked like this &mdash; real years were far bumpier.`, ''],
+    ['After inflation', pct(s.realCagr,1), '',
+     `The same average return, restated in what it could actually buy. Prices roughly tripled over the period, so this is the rate that matters for funding a retirement.`, ''],
+    ['Best single year', spct(s.best,1)+yr(s.bestYear), 'pos',
+     `The strongest calendar year of the period.`,
+     bal? `A repeat would take ${money(bal)} up to about ${money(bal*(1+s.best))} &mdash; a gain of ${money(bal*s.best)}.`:''],
+    ['Years that ended higher', `${s.total-s.down} of ${s.total}`, '',
+     `${s.total-s.down} of the ${s.total} full calendar years finished above where they started. Time in the market is what turns this into growth.`, '']
+  ];
+  const down = [
+    ['Worst single year', spct(s.worst,1)+yr(s.worstYear), 'neg',
+     `The weakest calendar year of the period.`,
+     bal? `A repeat would take ${money(bal)} down to about ${money(bal*(1+s.worst))} &mdash; a decline of ${money(-bal*s.worst)}.`:''],
+    ['Deepest decline', pct(d.dd,1), 'neg',
+     `Measured month to month, from the ${d.peak} high to the ${d.trough} low during the financial crisis. This is the worst it looked on a statement.`,
+     bal? `${money(bal)} would have shown as roughly ${money(bal*(1+d.dd))} at the bottom.`:''],
+    ['Time to recover', d.recMonths+' months',  '',
+     `From the ${d.peak} high, it took until ${d.recAt} to get back to even &mdash; about ${(d.recMonths/12).toFixed(1)} years of waiting, assuming you stayed put.`, ''],
+    ['Years that ended lower', `${s.down} of ${s.total}`, '',
+     `${s.down} of the ${s.total} full calendar years finished below where they started &mdash; roughly one year in ${(s.total/s.down).toFixed(1)}. Declines this often are a normal part of long-term investing.`, '']
+  ];
+
+  const cardHTML = a => a.map(([lbl,num,cls,exp,dol])=>
+    `<div class="stat">
+       <div class="lbl">${lbl}</div>
+       <div class="num ${cls}">${num}</div>
+       ${dol?`<div class="dol">${dol}</div>`:''}
+       <div class="exp">${exp}</div>
+     </div>`).join('');
+
+  document.getElementById('stats').innerHTML =
+    `<div class="statgroup up"><h3>${growLbl}</h3>${cardHTML(up)}</div>
+     <div class="statgroup down"><h3>${riskLbl}</h3>${cardHTML(down)}</div>`;
+
+  document.getElementById('statTitle').innerHTML =
+    `What history shows for ${/^[80]/.test(sel)?'an':'a'} ${sel} mix`;
+}
+
+/* ---- allocation table ---- */
+function renderAlloc(){
+  const o = OPTIONS.find(x=>x.id===sel);
+  const share = f => f.cat * (f.sleeve==='growth' ? o.growth : 1-o.growth);
+  const mix = FUNDS.filter(f=>f.sleeve);
+  const row = f => `<tr>
+      <td>${f.name}</td>
+      <td class="tick nowrap">${f.ticker}</td>
+      <td class="nowrap">${f.assetClass}</td>
+      <td class="r nowrap"><b>${pct(share(f),0)}</b></td>
+      <td class="r nowrap">${bal?money(bal*share(f)):'&mdash;'}</td>
+    </tr>`;
+  const sleeveRows = (key,label,target) => {
+    const fs = mix.filter(f=>f.sleeve===key);
+    return `<tr class="sec"><td colspan="3">${label}</td>
+      <td class="r">${pct(target,0)}</td>
+      <td class="r">${bal?money(bal*target):'&mdash;'}</td></tr>`
+      + fs.map(row).join('');
+  };
+  const blendER = mix.reduce((a,f)=>a+share(f)*f.er, 0);
+  document.getElementById('alloc').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Investment</th><th>Ticker</th><th>Asset class</th>
+        <th class="r">Your %</th><th class="r">Dollars</th>
+      </tr></thead>
+      <tbody>
+        ${sleeveRows('growth','Growth', o.growth)}
+        ${sleeveRows('protective','Protective', 1-o.growth)}
+        <tr class="tot"><td colspan="3">Total</td><td class="r">100%</td>
+          <td class="r">${bal?money(bal):'&mdash;'}</td></tr>
+      </tbody>
+    </table>
+    <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+                margin-top:14px;padding:12px 14px;background:var(--fog);border-radius:4px">
+      <div style="font-size:12px;line-height:1.5;max-width:56ch">
+        <b style="color:var(--navy)">Blended fund cost.</b> The weighted average expense ratio of this
+        mix &mdash; what the fund companies charge each year, already deducted from the returns you see.
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:23px;font-weight:700;color:var(--navy);letter-spacing:-.5px;
+                    font-variant-numeric:tabular-nums;line-height:1.1">${pct(blendER,2)}</div>
+        <div style="font-size:11.5px;color:var(--muted)">${bal?'about '+money(bal*blendER)+' a year':'per year'}</div>
+      </div>
+    </div>`;
+  document.getElementById('allocTitle').textContent = `Your ${sel} allocation`;
+}
+
+/* ---- fund menu tab ---- */
+function renderFunds(){
+  const grp = cls => {
+    const fs = FUNDS.filter(f=>f.assetClass===cls);
+    if(!fs.length) return '';
+    return `<tr class="sec"><td colspan="4">${cls}</td></tr>` + fs.map(f=>`<tr>
+        <td>
+          <b style="color:var(--navy)">${f.name}</b>
+          ${f.sleeve?`<span class="badge">In your mix</span>`:''}
+          <div style="font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.5">${f.desc}</div>
+        </td>
+        <td class="tick nowrap">${f.ticker}</td>
+        <td class="nowrap">${f.mstar}</td>
+        <td class="r nowrap num-cell">${pct(f.er,2)}</td>
+      </tr>`).join('');
+  };
+  document.getElementById('funds').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Investment &amp; what it holds</th><th>Ticker</th>
+        <th>Morningstar category</th><th class="r">Annual cost</th>
+      </tr></thead>
+      <tbody>${CLASS_ORDER.map(grp).join('')}</tbody>
+    </table>
+    <div class="note" style="margin-top:16px">
+      <b>Reading this list.</b> The ${FUNDS.filter(f=>f.sleeve).length} funds marked
+      <span class="badge" style="margin:0 2px">In your mix</span> are the ones the three options on the
+      first tab are built from. The rest are available to you but aren't part of these models.
+      <b>Annual cost</b> is the expense ratio &mdash; what the fund company charges each year, already
+      taken out of the returns that get reported. It ranges from
+      ${pct(Math.min(...FUNDS.map(f=>f.er)),2)} to ${pct(Math.max(...FUNDS.map(f=>f.er)),2)} across this menu,
+      which is a real difference over decades.
+    </div>`;
+  document.getElementById('glossary').innerHTML = GLOSSARY.map(([t,d])=>
+    `<div style="padding:11px 0;border-bottom:1px solid var(--line)">
+       <div style="font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:3px">${t}</div>
+       <div style="font-size:12px;color:var(--text);line-height:1.6;max-width:80ch">${d}</div>
+     </div>`).join('');
+}
+
+/* ---- chart ---- */
+function renderChart(){
+  const W=980,H=340,L=58,R=14,T=14,B=30;
+  const all = OPTIONS.flatMap(o=>CURVES[o.id].map(p=>p.v));
+  const maxV = Math.max(...all), minY=1986, maxY=2026;
+  const x = y => L + (y-minY)/(maxY-minY)*(W-L-R);
+  const yy = v => T + (1 - v/maxV)*(H-T-B);
+  const path = id => 'M'+CURVES[id].map(p=>x(p.year).toFixed(1)+','+yy(p.v).toFixed(1)).join('L');
+
+  const ticks=[0,50000,100000,150000,200000,250000,300000].filter(t=>t<=maxV*1.02);
+  const grid = ticks.map(t=>`
+    <line x1="${L}" x2="${W-R}" y1="${yy(t)}" y2="${yy(t)}" stroke="#e6eaf2" stroke-width="1"/>
+    <text x="${L-8}" y="${yy(t)+4}" text-anchor="end" font-size="11" fill="#8A96AA" font-family="Inter,sans-serif">${t?'$'+(t/1000)+'k':'$0'}</text>`).join('');
+  const xt=[1990,1995,2000,2005,2010,2015,2020,2025].map(y=>
+    `<text x="${x(y)}" y="${H-9}" text-anchor="middle" font-size="11" fill="#8A96AA" font-family="Inter,sans-serif">${y}</text>`).join('');
+
+  const others = OPTIONS.filter(o=>o.id!==sel).map(o=>
+    `<path d="${path(o.id)}" fill="none" stroke="#c3cbd9" stroke-width="1.6"/>`).join('');
+  const end = CURVES[sel][CURVES[sel].length-1];
+
+  document.getElementById('chart').innerHTML =
+   `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img"
+      aria-label="Growth of ten thousand dollars from 1987 to 2026 for each mix">
+      ${grid}${xt}
+      <line x1="${L}" x2="${W-R}" y1="${yy(0)}" y2="${yy(0)}" stroke="#c3cbd9"/>
+      ${others}
+      <path d="${path(sel)}" fill="none" stroke="#1B2B4B" stroke-width="2.6" stroke-linejoin="round"/>
+      <circle cx="${x(end.year)}" cy="${yy(end.v)}" r="4" fill="#1B2B4B"/>
+      <text x="${x(end.year)-8}" y="${yy(end.v)-11}" text-anchor="end" font-size="13" font-weight="700"
+            fill="#1B2B4B" font-family="Inter,sans-serif">${money(end.v)}</text>
+    </svg>`;
+
+  document.getElementById('legend').innerHTML = OPTIONS.map(o=>
+    `<span style="color:${o.id===sel?'var(--navy)':'var(--muted)'};font-weight:${o.id===sel?600:400}">
+       <i style="background:${o.id===sel?'#1B2B4B':'#c3cbd9'}"></i>${o.id}${o.id===sel?' (yours)':''}
+       &nbsp;&rarr;&nbsp;${money(CURVES[o.id][CURVES[o.id].length-1].v)}
+     </span>`).join('');
+}
+
+function renderAll(){ renderOpts(); renderStats(); renderAlloc(); renderChart(); }
+
+/* ---- wiring ---- */
+const balInput = document.getElementById('bal');
+function syncBal(){
+  bal = parseBal(balInput.value);
+  renderStats(); renderAlloc();
+}
+balInput.addEventListener('input', syncBal);
+balInput.addEventListener('blur', ()=>{ if(bal) balInput.value = bal.toLocaleString('en-US'); });
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>showTab(t.id));
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>{
+    const on = t.id===id;
+    t.setAttribute('aria-selected', on);
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('viewfunds').onclick = ()=>showTab('t2');
+document.getElementById('pdf').onclick = ()=>window.print();
+
+renderAll(); renderFunds();
+</script>
+</body>
+</html>
